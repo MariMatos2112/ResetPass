@@ -2,6 +2,13 @@
 {% block head %} {{ super() }} {% endblock %}
 
 {% block content %}
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <h3>{{ message }}</h3>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 <h2 class="px-4 pb-2 pt-4 text-primary text-center">Login</h2>
 <form class="px-4" method="post" action="/login">
     <div class="form-group py-2">
