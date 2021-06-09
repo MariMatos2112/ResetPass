@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
 from . import db
@@ -14,18 +14,21 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('profile.html', name=current_user.name, email=current_user.email)
 
 @main.route('/profile', methods=['POST'])
 def profile_post():
-    name = request.form.get('name')
-    email = request.form.get('email')
+    name = current_user.name
+    email = current_user.email
     new_password = request.form.get('new_password')
+    new_password_confirmation = request.form.get('new_password_confirmation')
 
-    print(name, email, new_password)
+    if new_password == new_password_confirmation:
+        user = User.query.filter_by(email=email).first()
+        user.password = generate_password_hash(new_password, method='sha256')
+        db.session.commit()
+        flash('Sua senha foi alterada com sucesso.')
+    else:
+        flash('As senhas não são iguais.')
 
-    new_user = User(name=name, email=email, password=generate_password_hash(new_password, method='sha256'))
-    db.session.add(new_user)
-    db.session.commit()
-
-    return redirect(url_for('main.index'))
+    return redirect(url_for('main.profile'))

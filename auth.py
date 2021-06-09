@@ -1,5 +1,6 @@
 from os import name
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask.helpers import flash
 from werkzeug.security import check_password_hash
 from flask_login import login_user, logout_user, login_required
 from .models import User
@@ -18,6 +19,7 @@ def login_post():
     user = User.query.filter_by(email=email).first()
 
     if not user or not check_password_hash(user.password, password):
+        flash('Seu usuário ou senha está incorreto.')
         return redirect(url_for('auth.login'))
 
     login_user(user)
