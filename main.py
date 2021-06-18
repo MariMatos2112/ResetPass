@@ -1,8 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import *
 from flask_login import login_required, current_user
 from werkzeug.security import generate_password_hash
 from . import db
 from .models import User
+import subprocess
 
 main = Blueprint('main', __name__)
 
@@ -10,6 +12,20 @@ main = Blueprint('main', __name__)
 @login_required
 def index():
     return render_template('index.html', name=current_user.name)
+
+@main.route('/', methods=['POST'])
+def index_post():
+    login = request.form.get('ad_user_login')
+    
+    change_password = f'Set-ADAccountPassword -Identity {login} -NewPassword (ConvertTo-SecureString -AsPlainText "Marvel@112233" -Force)'
+    unlock_user = f'Unlock-ADAccount -Identity {login}'
+    change_password_at_logon = f'Set-ADUser -Identity {login} -ChangePasswordAtLogon $true'
+    subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password}")
+    subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {unlock_user}")
+    subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password_at_logon}")
+
+    return redirect(url_for('main.index'))
+
 
 @main.route('/profile')
 @login_required
