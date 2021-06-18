@@ -2,5 +2,13 @@
 {% block head %} {{ super() }} {% endblock %}
 
 {% block content %}
-<h1>Bem vindo, {{ name }}</h1>
+<h2 class="px-4 pb-2 pt-4 text-primary text-center">Alterar senha de usuário de rede</h2>
+<form class="px-4" method="post" action="/">
+    <div class="form-group py-2">
+        <input type="text" name="ad_user_login" class="form-control" placeholder="Digite o login do usuário">
+    </div>
+    <div class="w-100 d-flex justify-content-center">
+        <input type="submit" value="Confirmar alteração de senha" class="btn btn-primary w-25 mt-4">
+    </div>
+</form>
 {% endblock %}
