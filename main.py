@@ -16,13 +16,17 @@ def index():
 @main.route('/', methods=['POST'])
 def index_post():
     login = request.form.get('ad_user_login')
-    
-    change_password = f'Set-ADAccountPassword -Identity {login} -NewPassword (ConvertTo-SecureString -AsPlainText "Marvel@112233" -Force)'
-    unlock_user = f'Unlock-ADAccount -Identity {login}'
-    change_password_at_logon = f'Set-ADUser -Identity {login} -ChangePasswordAtLogon $true'
-    subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password}")
-    subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {unlock_user}")
-    subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password_at_logon}")
+
+    try:
+        change_password = f'Set-ADAccountPassword -Identity {login} -NewPassword (ConvertTo-SecureString -AsPlainText "Marvel@112233" -Force)'
+        unlock_user = f'Unlock-ADAccount -Identity {login}'
+        change_password_at_logon = f'Set-ADUser -Identity {login} -ChangePasswordAtLogon $true'
+        subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password}")
+        subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {unlock_user}")
+        subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password_at_logon}")
+        flash('Senha alterada com sucesso!')
+    except:
+        flash('Usuário não existe :(')
 
     return redirect(url_for('main.index'))
 
@@ -43,8 +47,8 @@ def profile_post():
         user = User.query.filter_by(email=email).first()
         user.password = generate_password_hash(new_password, method='sha256')
         db.session.commit()
-        flash('Sua senha foi alterada com sucesso.')
+        flash('Sua senha foi alterada com sucesso!')
     else:
-        flash('As senhas não são iguais.')
+        flash('As senhas não coincidem :(')
 
     return redirect(url_for('main.profile'))
