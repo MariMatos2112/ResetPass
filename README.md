@@ -19,6 +19,7 @@ Primeiramente, é necessário logar com seu usuário. (Obs: O mesmo deve estar c
 Logo em seguida, uma página para pesquisar um usuário por seu login na rede é renderizada. <br>
 Basta digitar o login no campo disponível, confirmar que o usuário em questão é aquele que você está procurando e pronto! <br>
 A senha do user é alterada para uma senha padrão. 
+![image](https://user-images.githubusercontent.com/67180109/140191219-eaaa12f5-3b5f-46a9-8be0-3c5cba427814.png)
 
 ### Diferença que o ResetP@ss faz dentro do Hospital Universitário...
 A recuperação das senhas de rede tornou-se um processo muito mais rápido, fácil e seguro, pois permitiu que as senhas perdidas fossem recuperadas com apenas alguns cliques e sem acesso direto ao servidor.
