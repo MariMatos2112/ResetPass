@@ -18,17 +18,42 @@ def index_post():
     login = request.form.get('ad_user_login')
 
     try:
-        change_password = f'Set-ADAccountPassword -Identity {login} -NewPassword (ConvertTo-SecureString -AsPlainText "Marvel@112233" -Force)'
-        unlock_user = f'Unlock-ADAccount -Identity {login}'
-        change_password_at_logon = f'Set-ADUser -Identity {login} -ChangePasswordAtLogon $true'
+        user_data = subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command Get-ADUser -Identity {login}")
+        user_data = str(user_data)
+        first_index = user_data.find('=')
+        last_index = user_data.find(',')
+        user_full_name = user_data[first_index + 1:last_index]
+        session['full_name'] = user_full_name
+        session['login'] = login
+        flash('Usuário encontrado com sucesso!')
+        return redirect(url_for('main.confirm_user'))
+    except:
+        flash('Usuário não existe :(')
+        return redirect(url_for('main.index'))
+    
+
+
+@main.route('/confirm-user')
+@login_required
+def confirm_user():
+    return render_template('index_2.html', name=session['full_name'], login=session['login']) 
+
+@main.route('/confirm-user', methods=['POST'])
+def confirm_user_post():
+    login_shell = session['login']
+
+    try:
+        change_password = f'Set-ADAccountPassword -Identity {login_shell} -NewPassword (ConvertTo-SecureString -AsPlainText "1234567" -Force)'
+        unlock_user = f'Unlock-ADAccount -Identity {login_shell}'
+        change_password_at_logon = f'Set-ADUser -Identity {login_shell} -ChangePasswordAtLogon $true'
         subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password}")
         subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {unlock_user}")
         subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password_at_logon}")
         flash('Senha alterada com sucesso!')
     except:
-        flash('Usuário não existe :(')
-
-    return redirect(url_for('main.index'))
+        flash('Erro na alteração da senha :(')
+    
+    return redirect(url_for('main.index'))       
 
 
 @main.route('/profile')
