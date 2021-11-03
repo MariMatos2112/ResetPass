@@ -24,8 +24,9 @@ A senha do user é alterada para uma senha padrão.
 A recuperação das senhas de rede tornou-se um processo muito mais rápido, fácil e seguro, pois permitiu que as senhas perdidas fossem recuperadas com apenas alguns cliques e sem acesso direto ao servidor.
 
 ### Observações...
-* É necessário que o banco de dados SQLITE seja criado manualmente
-* É necessário que seja feito o comando export <i>FLASK_APP=nome_arquivo.py</i> para configurar uma variável de ambiente.
+* Esse repositório não apresenta nenhum tipo de informação condifencial do Hospital Universitário Clemente de Farias;
+* É necessário que o banco de dados SQLITE seja criado manualmente;
+* É necessário que seja feito o comando export <i>FLASK_APP=nome_arquivo.py</i> para configurar uma variável de ambiente;
 * O sistema só funcionará em ambiente de Active Directory, pois ele comunica diretamente com o mesmo.
 
 ### Rodando o programa...
