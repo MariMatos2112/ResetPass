@@ -5,7 +5,7 @@
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
-            <span style="background-color: #FFED99; display: inline-block; font-family: 'Arvo', sans-serif; font-size: 18px;" class="py-2 px-3 m-2">{{ message }}</span>
+            <span style="background-color: #FFED99; display: inline-block; font-family: 'Arvo', sans-serif; font-size: 18px;" class="flash-msg py-2 px-3 m-2">{{ message }}</span>
         {% endfor %}
     {% endif %}
 {% endwith %}
@@ -16,7 +16,7 @@
         <input type="text" name="ad_user_login" class="form-control" placeholder="Digite o login do usuário" style="color: #787878;">
     </div> 
     <div class="w-100 d-flex justify-content-center">
-        <input type="submit" value="Confirmar alteração" class="btn btn-info w-25 mt-4 text-light">
+        <input type="submit" value="Pesquisar Usuário " class="btn btn-info w-25 mt-4 text-light">
     </div>
 </form>
 {% endblock %}
