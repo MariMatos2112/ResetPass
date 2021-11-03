@@ -43,7 +43,7 @@ def confirm_user_post():
     login_shell = session['login']
 
     try:
-        change_password = f'Set-ADAccountPassword -Identity {login_shell} -NewPassword (ConvertTo-SecureString -AsPlainText "1234567" -Force)'
+        change_password = f'Set-ADAccountPassword -Identity {login_shell} -NewPassword (ConvertTo-SecureString -AsPlainText "MarvelIsAwesome" -Force)'
         unlock_user = f'Unlock-ADAccount -Identity {login_shell}'
         change_password_at_logon = f'Set-ADUser -Identity {login_shell} -ChangePasswordAtLogon $true'
         subprocess.check_output(f"PowerShell -Executionpolicy byPass -Command {change_password}")
