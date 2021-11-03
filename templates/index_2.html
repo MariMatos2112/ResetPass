@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block head %} {{ super() }} {% endblock %} {% block
+content%}
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <span style="background-color: #FFED99; display: inline-block; font-family: 'Arvo', sans-serif; font-size: 18px;" class="flash-msg py-2 px-3 m-2">{{ message }}</span>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form class="px-4" method="post" action="/confirm-user" style="position: absolute; top: 50%; left: 50%; width: 80%; transform: translate(-50%, -50%);">
+  <h2 class="px-4 pb-2 pt-4 text-primary text-center" style="font-family: 'Arvo', sans-serif;">Confirmar Usuário</h2>
+  <div class="form-group py-2 bg-light px-2 my-2">
+    Nome: <span class="text-primary">{{ name }}</span>
+  </div>
+  <div class="form-group py-2 bg-light px-2 my-2">
+    Login: <span class="text-primary"> {{ login }}</span>
+  </div>
+  <div class="w-100 d-flex justify-content-center">
+    <button type="submit" class="btn btn-primary w-25 mt-4">
+      Confirmar
+    </button>
+  </div>
+</form>
+
+
+{% endblock %}
