@@ -4,7 +4,7 @@ content%}
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         {% for message in messages %}
-            <h3 style="background-color: #FFED99; display: inline-block; font-family: 'Arvo', sans-serif; font-size: 18px;" class="py-2 px-3 m-2">{{ message }}</h3>
+            <span style="background-color: #FFED99; display: inline-block; font-family: 'Arvo', sans-serif; font-size: 18px;" class="flash-msg py-2 px-3 m-2">{{ message }}</span>
         {% endfor %}
     {% endif %}
 {% endwith %}
